@@ -1,8 +1,14 @@
 import time
 import sys
 import requests
+import tkinter as tk
+from tkinter import filedialog
 
-token = "b2de788b6417d4e8d0d6fd0bed0cffde2d6be116"
+root = tk.Tk()
+root.withdraw()
+
+
+token = "YOUR_TOKEN_HERE"
 
 
 def start_automodel_from_fasta_file(fasta_file):
@@ -14,6 +20,10 @@ def start_automodel_from_fasta_file(fasta_file):
 
     for i in range(1, len(fasta_file)):
         sequence += fasta_file[i]
+
+    if len(sequence) < 30:
+        print("Error: The target sequence must be longer than 30 residues.")
+        sys.exit()
 
     response = requests.post(
         "https://swissmodel.expasy.org/automodel",
@@ -60,8 +70,10 @@ def get_generated_files_from_project_id(project_id):
 
 
 if __name__ == "__main__":
+    
+    fasta_file = filedialog.askopenfilename(initialdir = "desktop", title = "Select fasta file", filetypes = (("fasta files", "*.fasta"), ("all files", "*.*")))
 
-    f = open("example.fasta", "r").read()
+    f = open(fasta_file, "r").read()
 
     project_id = start_automodel_from_fasta_file(f)
 
