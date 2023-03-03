@@ -95,7 +95,7 @@ def extract_pdb_file_from_gz_file():
 
 
 def convert_pdb_to_mol2():
-    os.system("obabel -ipdb model.pdb -omol -O model.mol")
+    os.system("obabel -ipdb model.pdb -omol2 -O model.mol2")
     print("Finished converting the pdb file to a mol2 file")
 
 
