@@ -1,14 +1,18 @@
-import time
+import gzip
+import os
+import shutil
 import sys
-import requests
+import time
 import tkinter as tk
 from tkinter import filedialog
+
+import requests
 
 root = tk.Tk()
 root.withdraw()
 
 
-token = "YOUR_TOKEN_HERE"
+token = "775f34af6f76fc32a515ca859f208ba3205ad088"
 
 
 def start_automodel_from_fasta_file(fasta_file):
@@ -69,6 +73,32 @@ def get_generated_files_from_project_id(project_id):
     return files_url
 
 
+def get_pdb_file_from_project_id(project_id):
+    # Download the files
+    for file_url in get_generated_files_from_project_id(project_id):
+        file_name = file_url.split("/")[-1]
+        print("Downloading", file_name)
+
+        response = requests.get(file_url, stream=True)
+        with open(file_name, "wb") as handle:
+            for data in response.iter_content():
+                handle.write(data)
+
+        print("Finished downloading", file_name)
+
+
+def extract_pdb_file_from_gz_file():
+    with gzip.open('01.pdb.gz', 'rb') as f_in:
+        with open('model.pdb', 'wb') as f_out:
+            shutil.copyfileobj(f_in, f_out)
+        print("Finished extracting the pdb file")
+
+
+def convert_pdb_to_mol2():
+    os.system("obabel -ipdb model.pdb -omol2 -O model.mol2")
+    print("Finished converting the pdb file to a mol2 file")
+
+
 if __name__ == "__main__":
     
     fasta_file = filedialog.askopenfilename(initialdir = "desktop", title = "Select fasta file", filetypes = (("fasta files", "*.fasta"), ("all files", "*.*")))
@@ -78,4 +108,13 @@ if __name__ == "__main__":
     project_id = start_automodel_from_fasta_file(f)
 
     # Fetch the bulk download of results from the parameter "download_url"
-    print("Fetch the results from: ", get_generated_files_from_project_id(project_id))
+    # print("Fetch the results from: ", get_generated_files_from_project_id(project_id))
+
+    # Download the files
+    get_pdb_file_from_project_id(project_id)
+
+    # extract the pdb file from the gz file
+    extract_pdb_file_from_gz_file()
+
+    # convert the pdb file to a mol2 file
+    convert_pdb_to_mol2()
