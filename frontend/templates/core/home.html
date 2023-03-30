@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <!-- Meta tags Obrigatórias -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Integra pHLA3D</title>
+  </head>
+  <body>
+    <nav class="navbar fixed-top" style="background-color: #344058;">
+        <div class="float-left" style="padding-left: 6px;">
+            <a class="navbar-brand" href="/"><img src="/images/logo.svg" alt="pHLA3D" width="89" height="25"></a>
+        </div>
+    </nav>
+    
+    <div class="container text-center" style="margin-top: 100px;">
+        <form>
+            <div class="text-center">
+                <h2 class="page-title">Selecione o arquivo em formato .FASTA</h2>
+                <label for="file-upload" class="btn btn-secondary">
+                    <input id="file-upload" type="file" style="display:none;">
+                    Escolher arquivo
+                </label>
+                <p id="file-name" class="mt-2"></p>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        const fileUpload = document.getElementById("file-upload");
+        const fileName = document.getElementById("file-name");
+    
+        fileUpload.addEventListener("change", function () {
+            fileName.innerText = this.value.split("\\").pop();
+        });
+    </script>
+
+    <div class="text-center">
+        <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+            Fazer upload do arquivo
+        </button>
+    </div>
+
+    <footer class="footer" style="position: fixed; bottom: 0; width: 100%; background: #ededed; padding: 28px 0px 28px 0px;">
+        <div style="padding-left: 20px;">
+            © 2023 <a href="http://www.ufpi.br">LIB-UFPI</a>, <a href="http://www.uespi.br">UESPI</a> &amp; <a href="http://www.ifpi.edu.br">IFPI</a>.
+            <a href="/main/terms">Terms</a>.
+            <a href="/main/license">License</a>.
+            Version 22.10.19.
+            <a href="/#section-citing"><strong>Cite this database</strong></a>!
+        </div>
+    </footer>
+
+    <!-- JavaScript (Opcional) -->
+    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
