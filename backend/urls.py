@@ -21,5 +21,4 @@ from backend.core import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.home, name="home"),
-    path('automodel/', views.start_automodel, name='automodel')
 ]
