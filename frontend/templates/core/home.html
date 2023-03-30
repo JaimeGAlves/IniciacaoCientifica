@@ -1,3 +1,4 @@
+{% load static  %}
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -9,11 +10,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <title>Integra pHLA3D</title>
-  </head>
+    <link rel="shortcut icon" type="image/png" href="{% static 'static/favicon.png' %}"/>  </head>
   <body>
     <nav class="navbar fixed-top" style="background-color: #344058;">
         <div class="float-left" style="padding-left: 6px;">
-            <a class="navbar-brand" href="/"><img src="/images/logo.svg" alt="pHLA3D" width="89" height="25"></a>
+            <a class="navbar-brand" href="/"><img src="{% static 'static/logo.svg' %}" alt="pHLA3D" width="89" height="25"></a>
         </div>
     </nav>
     
