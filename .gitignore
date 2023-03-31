@@ -2,3 +2,5 @@
 *.pdb
 *.mol2
 *.mol
+/files
+/tmp

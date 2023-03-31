@@ -3,14 +3,9 @@ import os
 import shutil
 import sys
 import time
-import tkinter as tk
-from tkinter import filedialog
+from datetime import datetime
 
 import requests
-
-root = tk.Tk()
-root.withdraw()
-
 
 token = "775f34af6f76fc32a515ca859f208ba3205ad088"
 
@@ -80,26 +75,28 @@ def get_pdb_file_from_project_id(project_id):
         print("Downloading", file_name)
 
         response = requests.get(file_url, stream=True)
-        with open(file_name, "wb") as handle:
+        with open("tmp/" + file_name, "wb") as handle:
             for data in response.iter_content():
                 handle.write(data)
 
         print("Finished downloading", file_name)
 
 
-def extract_pdb_file_from_gz_file():
-    with gzip.open('01.pdb.gz', 'rb') as f_in:
-        with open('model.pdb', 'wb') as f_out:
+def extract_pdb_file_from_gz_file(file):
+    with gzip.open(file, 'rb') as f_in:
+        with open('tmp/model.pdb', 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
         print("Finished extracting the pdb file")
 
     # remove the gz file
-    os.remove("01.pdb.gz")
+    os.remove("tmp/01.pdb.gz")
 
 
 def convert_pdb_to_mol2():
-    os.system("obabel -ipdb model.pdb -omol2 -O model.mol2")
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    os.system(f"obabel -ipdb tmp/model.pdb -omol2 -O files/{timestamp}_model.mol2")
     print("Finished converting the pdb file to a mol2 file")
+    os.remove("tmp/model.pdb")
 
 
 def convert_pdb_to_mol2_with_pybel():
@@ -111,22 +108,22 @@ def convert_pdb_to_mol2_with_pybel():
     print("Finished converting the pdb file to a mol2 file")
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    fasta_file = filedialog.askopenfilename(initialdir = "desktop", title = "Select fasta file", filetypes = (("fasta files", "*.fasta"), ("all files", "*.*")))
+#     fasta_file = filedialog.askopenfilename(initialdir = "desktop", title = "Select fasta file", filetypes = (("fasta files", "*.fasta"), ("all files", "*.*")))
 
-    f = open(fasta_file, "r").read()
+#     f = open(fasta_file, "r").read()
 
-    project_id = start_automodel_from_fasta_file(f)
+#     project_id = start_automodel_from_fasta_file(f)
 
-    # Fetch the bulk download of results from the parameter "download_url"
-    # print("Fetch the results from: ", get_generated_files_from_project_id(project_id))
+#     # Fetch the bulk download of results from the parameter "download_url"
+#     # print("Fetch the results from: ", get_generated_files_from_project_id(project_id))
 
-    # Download the files
-    get_pdb_file_from_project_id(project_id)
+#     # Download the files
+#     get_pdb_file_from_project_id(project_id)
 
-    # extract the pdb file from the gz file
-    extract_pdb_file_from_gz_file()
+#     # extract the pdb file from the gz file
+#     extract_pdb_file_from_gz_file()
 
-    # convert the pdb file to a mol2 file
-    convert_pdb_to_mol2()
+#     # convert the pdb file to a mol2 file
+#     convert_pdb_to_mol2()
