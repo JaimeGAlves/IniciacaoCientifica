@@ -2,6 +2,6 @@
 *.pdb
 *.mol2
 *.mol
-# /files/*
-# /tmp/*
+/files/*
+/tmp/*
 __pycache__
