@@ -4,3 +4,4 @@
 *.mol
 /files
 /tmp
+__pycache__
