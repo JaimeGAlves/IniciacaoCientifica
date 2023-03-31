@@ -93,9 +93,21 @@ def extract_pdb_file_from_gz_file():
             shutil.copyfileobj(f_in, f_out)
         print("Finished extracting the pdb file")
 
+    # remove the gz file
+    os.remove("01.pdb.gz")
+
 
 def convert_pdb_to_mol2():
     os.system("obabel -ipdb model.pdb -omol2 -O model.mol2")
+    print("Finished converting the pdb file to a mol2 file")
+
+
+def convert_pdb_to_mol2_with_pybel():
+    from pybel import readfile
+
+    for mol in readfile("pdb", "model.pdb"):
+        mol.write("mol2", "model.mol2", overwrite=True)
+
     print("Finished converting the pdb file to a mol2 file")
 
 
