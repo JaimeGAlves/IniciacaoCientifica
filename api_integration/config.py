@@ -1,0 +1,1 @@
+swissmodel_token = "775f34af6f76fc32a515ca859f208ba3205ad088"

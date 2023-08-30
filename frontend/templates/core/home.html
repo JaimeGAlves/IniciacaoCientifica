@@ -20,7 +20,7 @@
         </nav>
         
         <div class="container text-center" style="margin-top: 100px;">
-            <form>
+            <form id="upload-form">
                 <div class="text-center">
                     <h4 class="page-title">Selecione o arquivo em formato .FASTA</h4>
                     <label for="file-upload" class="btn btn-secondary">
@@ -57,27 +57,38 @@
         </div>
 
         <script>
-            const uploadBtn = document.getElementById("upload-btn");
-            const progressBar = document.getElementById("progressbar");
+            const fileUpload = document.getElementById("file-upload");
+            const fileName = document.getElementById("file-name");
+            const uploadForm = document.getElementById("upload-form");
             
-            uploadBtn.addEventListener("click", function() {
-              // reset progress bar
-              progressBar.style.width = "0%";
-              progressBar.setAttribute("aria-valuenow", 0);
-              progressBar.innerHTML = "0%";
-            
-              let percent = 0;
-              const interval = setInterval(function() {
-                percent += 1;
-                progressBar.style.width = percent + "%";
-                progressBar.innerText = percent + "%";
-            
-                if (percent >= 100) {
-                  clearInterval(interval);
+            fileUpload.addEventListener("change", function(event) {
+                const file = event.target.files[0];
+                fileName.innerText = file.name;
+            });
+        
+            // Atualize a URL da rota para corresponder à rota do seu projeto Django
+            const uploadUrl = "{% url 'upload-file' %}";
+        
+            uploadForm.addEventListener("submit", async function(event) {
+                event.preventDefault();
+        
+                const formData = new FormData(uploadForm);
+                try {
+                    const response = await fetch(uploadUrl, {
+                        method: "POST",
+                        body: formData,
+                    });
+        
+                    if (response.ok) {
+                        const responseData = await response.json();
+                        // Aqui você pode manipular a resposta da API como desejar
+                        console.log(responseData);
+                    } else {
+                        console.error("Erro ao enviar o arquivo para a API");
+                    }
+                } catch (error) {
+                    console.error("Erro ao enviar o arquivo:", error);
                 }
-              }, 200);
-              
-              progressBar.parentElement.classList.remove("d-none");
             });
         </script>
 

@@ -1,0 +1,10 @@
+*.gz
+*.pdb
+*.mol2
+*.mol
+/files/*
+/tmp/*
+__pycache__
+db.sqlite3
+/tmp/*
+/files/*
