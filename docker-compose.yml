@@ -1,0 +1,21 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - api_integration
+
+  api_integration:
+    build:
+      context: .
+      dockerfile: api_integration/Dockerfile
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./api_integration:/app

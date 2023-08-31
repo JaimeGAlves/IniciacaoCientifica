@@ -1,4 +1,3 @@
-import json
 import requests
 from django.http import JsonResponse
 from django.shortcuts import render
